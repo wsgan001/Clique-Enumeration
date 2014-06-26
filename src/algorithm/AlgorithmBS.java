@@ -1,11 +1,10 @@
 package algorithm;
 
-import utility.Measurable;
 import graph.GraphBS;
 
 import java.util.BitSet;
 
-public abstract class AlgorithmBS implements Measurable {
+public abstract class AlgorithmBS {
 
 	protected final GraphBS graph;
 	protected final int size;
@@ -17,7 +16,6 @@ public abstract class AlgorithmBS implements Measurable {
 		this.cliqueNumber = 0;
 	}
 
-	@Override
 	public void run() {
 		BitSet P = new BitSet(size);
 		P.set(0, size);

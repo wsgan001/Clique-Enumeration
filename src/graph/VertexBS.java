@@ -52,15 +52,19 @@ public class VertexBS implements Comparable<VertexBS> {
 
 	@Override
 	public boolean equals(Object obj) {
-		VertexBS o = (VertexBS)obj;
-		boolean equals = true;
+		boolean result = true;
 
-		if (!this.adjacency.equals(o.getAdjacency()))
-			equals = false;
+		if (obj instanceof VertexBS) {
+			VertexBS o = (VertexBS) obj;
 
-		if (this.index != o.getIndex())
-			equals = false;
+			if (!this.adjacency.equals(o.getAdjacency()))
+				result = false;
 
-		return equals;
+			if (this.index != o.getIndex())
+				result = false;
+		}
+		else result = false;
+
+		return result;
 	}
 }

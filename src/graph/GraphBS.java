@@ -79,17 +79,24 @@ public class GraphBS implements Graph {
 
 	@Override
 	public boolean equals(Object o) {
-		GraphBS other = (GraphBS) o;
+		boolean result = true;
 
-		if (this.size != other.size())
-			return false;
+		if(o instanceof GraphBS) {
+			GraphBS other = (GraphBS) o;
 
-		for (int i = 0; i < size; i++) {
-			if (!vertices[i].equals(other.getVertex(i)))
-				return false;
+			if (this.size != other.size())
+				result = false;
+
+			for (int i = 0; i < size; i++) {
+				if (!vertices[i].equals(other.getVertex(i))) {
+					result = false;
+					break;
+				}
+			}
 		}
+		else result = false;
 
-		return true;
+		return result;
 	}
 
 }

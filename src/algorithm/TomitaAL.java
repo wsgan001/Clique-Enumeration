@@ -2,15 +2,13 @@ package algorithm;
 
 import graph.GraphAL;
 import graph.VertexAL;
-import utility.Measurable;
 import utility.SetOperation;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class TomitaAL implements Measurable {
+public class TomitaAL {
 	private int cliqueNumber = 0;
 	private final int size;
 	private GraphAL graph;
