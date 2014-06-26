@@ -2,14 +2,25 @@ package test;
 
 import graph.GraphAL;
 import graph.GraphBS;
+import utility.FileLoader;
 import utility.PowerGraph;
 import utility.Utility;
 
 public abstract class PowerGraphSpeedTest {
 
-	public static void testRandom(int n, int m, int exponent) {
+	public static void testDataSet(String file, int exponent) {
+		GraphAL graphAL = FileLoader.loadGraphAL(file);
 
+		test(graphAL, exponent);
+	}
+
+	public static void testRandom(int n, int m, int exponent) {
 		GraphAL graphAL = Utility.generateSparseAL(n, m);
+
+		test(graphAL, exponent);
+	}
+
+	public static void test(GraphAL graphAL, int exponent) {
 		GraphBS graphBS = new GraphBS(graphAL);
 
 		long start = System.nanoTime();
@@ -27,11 +38,14 @@ public abstract class PowerGraphSpeedTest {
 		PowerGraph.raiseAL(graphAL, exponent);
 		printTime(start);
 
+		/*
 		start = System.nanoTime();
 		System.out.println("\nStarting raiseMMult algorithm:");
 		PowerGraph.raiseMMult(graphBS, exponent);
-		printTime(start);
+		printTime(start); */
 	}
+
+
 
 
 	private static void printTime(long start) {

@@ -6,14 +6,17 @@ import utility.SetOperation;
 
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.Iterator;
 
-public class TomitaAL {
-	private int cliqueNumber = 0;
+public class TomitaAL extends CliqueAlgorithm {
 	private final int size;
 	private GraphAL graph;
 
 	public TomitaAL(GraphAL graph) {
+		this(graph, false);
+	}
+
+	public TomitaAL(GraphAL graph, boolean verbose) {
+		super(verbose);
 		this.size = graph.size();
 		this.graph = graph;
 	}
@@ -26,7 +29,7 @@ public class TomitaAL {
 	
 	private void extend(ArrayList<VertexAL> R, ArrayList<VertexAL> P, ArrayList<VertexAL> X) {
 		
-		if (P.isEmpty() && X.isEmpty()) printClique(R, ++cliqueNumber);
+		if (P.isEmpty() && X.isEmpty()) reportClique(R);
 		
 		else {
 			// Find the pivot
@@ -55,16 +58,4 @@ public class TomitaAL {
 		}
 	}
 
-	private void printClique(ArrayList<VertexAL> clique, int n) {
-		System.out.print("Clique " + n + ": {");
-
-		if (!clique.isEmpty()) {
-			Iterator<VertexAL> it = clique.iterator();
-			System.out.print(it.next().getIndex());
-			while (it.hasNext()) {
-				System.out.print(", " + it.next().getIndex());
-			}
-		}
-		System.out.println("}");
-	}
 }

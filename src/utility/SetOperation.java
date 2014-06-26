@@ -18,7 +18,6 @@ public abstract class SetOperation {
 	}
 
 
-
 	public static<V> ArrayList<V> addToSet(ArrayList<V> set, V element) {
 		ArrayList<V> newSet = new ArrayList<>(set);
 		set.add(element);

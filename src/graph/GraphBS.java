@@ -55,6 +55,16 @@ public class GraphBS implements Graph {
 		return vertices[v].getAdjacency().get(w);
 	}
 
+	public BitSet[] adjacencyMatrix() {
+		BitSet[] matrix = new BitSet[size];
+
+		for (int i = 0; i < size; i++) {
+			matrix[i] = vertices[i].getAdjacency();
+		}
+
+		return matrix;
+	}
+
 	public BitSet getNeighbours(int v) {
 		return vertices[v].getAdjacency();
 	}

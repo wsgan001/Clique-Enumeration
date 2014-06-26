@@ -17,6 +17,7 @@ public class EppsteinBS extends TomitaBS {
 	public void run() {
 		int[] degeneracy = order();
 
+		long start = System.nanoTime();
 		BitSet P = new BitSet(size);
 		P.set(0, size);
 
@@ -45,6 +46,8 @@ public class EppsteinBS extends TomitaBS {
 			// add v to X
 			X.set(v);
 		}
+
+		System.out.println("Takes " + (System.nanoTime() - start)/1000000 + " ms without ordering.");
 
 	}
 

@@ -4,16 +4,27 @@ import graph.GraphBS;
 
 import java.util.BitSet;
 
-public class BronKerboschBS extends AlgorithmBS {
+public class BronKerboschBS extends CliqueAlgorithm {
 
-	public BronKerboschBS(GraphBS graph) {
-		super(graph);
+	protected final GraphBS graph;
+	protected final int size;
+
+	public BronKerboschBS(GraphBS graph, boolean verbose) {
+		super(verbose);
+		this.graph = graph;
+		this.size = graph.size();
 	}
 
-	@Override
+	public void run() {
+		BitSet P = new BitSet(size);
+		P.set(0, size);
+
+		extend(new BitSet(size), P, new BitSet(size));
+	}
+
 	protected void extend(BitSet R, BitSet P, BitSet X) {
 		if(P.cardinality() == 0 && X.cardinality() == 0) {
-			printClique(R, ++cliqueNumber);
+			reportClique(R);
 		}
 
 		int v = 0;

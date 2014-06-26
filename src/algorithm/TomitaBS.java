@@ -1,20 +1,23 @@
 package algorithm;
 
 import graph.GraphBS;
-
 import java.util.BitSet;
 
-public class TomitaBS extends AlgorithmBS {
+public class TomitaBS extends BronKerboschBS {
 
 	public TomitaBS(GraphBS graph) {
-		super(graph);
+		super(graph, false);
+	}
+
+	public TomitaBS(GraphBS graph, boolean verbose) {
+		super(graph, verbose);
 	}
 
 	@Override
 	protected void extend(BitSet R, BitSet P, BitSet X) {
 		// If maximal clique is found, print it and return
 		if(P.cardinality() == 0 && X.cardinality() == 0) {
-			printClique(R, ++cliqueNumber);
+			reportClique(R);
 			return;
 		}
 
