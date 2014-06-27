@@ -3,7 +3,7 @@ package algorithm;
 import graph.GraphBS;
 import java.util.BitSet;
 
-public class TomitaBKStyle extends CliqueAlgorithm{
+public class Pointers_Tomita extends CliqueAlgorithm{
 	private BitSet[] connected;
 	private int[] all;
 	private int n;
@@ -11,11 +11,11 @@ public class TomitaBKStyle extends CliqueAlgorithm{
 	private int[] compsub;
 	private int c = 0;
 
-	public TomitaBKStyle(GraphBS graph) {
+	public Pointers_Tomita(GraphBS graph) {
 		this(graph, false);
 	}
 
-	public TomitaBKStyle(GraphBS graph, boolean verbose) {
+	public Pointers_Tomita(GraphBS graph, boolean verbose) {
 		super(verbose);
 		n = graph.size();
 		connected = graph.adjacencyMatrix();

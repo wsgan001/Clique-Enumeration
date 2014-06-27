@@ -1,6 +1,6 @@
-import algorithm.TomitaBS;
+import algorithm.BS_WithPivot;
+import algorithm.BS_Tomita;
 import graph.GraphBS;
-import algorithm.TomitaBKStyle;
 import utility.FileLoader;
 
 
@@ -18,9 +18,9 @@ public class Tester {
 		/*EppsteinBS alg = new EppsteinBS(gbs);
 		alg.run();*/
 
-		TomitaBS tom1 = new TomitaBS(gbs);
+		BS_Tomita tom1 = new BS_Tomita(gbs);
 		tom1.measureTime();
-		TomitaBKStyle tom2 = new TomitaBKStyle(gbs);
+		BS_WithPivot tom2 = new BS_WithPivot(gbs);
 		tom2.measureTime();
 
 		System.out.println("Results: " + tom1.getNumberOfCliques() + " and " + tom2.getNumberOfCliques());

@@ -7,15 +7,15 @@ import utility.SetOperation;
 import java.util.Arrays;
 import java.util.ArrayList;
 
-public class TomitaAL extends CliqueAlgorithm {
+public class AL_Tomita extends CliqueAlgorithm {
 	private final int size;
 	private GraphAL graph;
 
-	public TomitaAL(GraphAL graph) {
+	public AL_Tomita(GraphAL graph) {
 		this(graph, false);
 	}
 
-	public TomitaAL(GraphAL graph, boolean verbose) {
+	public AL_Tomita(GraphAL graph, boolean verbose) {
 		super(verbose);
 		this.size = graph.size();
 		this.graph = graph;

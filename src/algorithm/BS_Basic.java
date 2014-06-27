@@ -4,12 +4,12 @@ import graph.GraphBS;
 
 import java.util.BitSet;
 
-public class BronKerboschBS extends CliqueAlgorithm {
+public class BS_Basic extends CliqueAlgorithm {
 
 	protected final GraphBS graph;
 	protected final int size;
 
-	public BronKerboschBS(GraphBS graph, boolean verbose) {
+	public BS_Basic(GraphBS graph, boolean verbose) {
 		super(verbose);
 		this.graph = graph;
 		this.size = graph.size();

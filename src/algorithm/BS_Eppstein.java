@@ -6,10 +6,10 @@ import graph.GraphBS;
 import java.util.Arrays;
 import java.util.BitSet;
 
-public class EppsteinBS extends TomitaBS {
+public class BS_Eppstein extends BS_Tomita {
 
 
-	public EppsteinBS(GraphBS graph) {
+	public BS_Eppstein(GraphBS graph) {
 		super(graph);
 	}
 
