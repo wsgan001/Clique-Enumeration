@@ -4,7 +4,7 @@ import graph.GraphAL;
 import graph.GraphBS;
 import utility.FileLoader;
 import utility.PowerGraph;
-import utility.Utility;
+import utility.Generator;
 
 public abstract class PowerGraphSpeedTest {
 
@@ -15,7 +15,7 @@ public abstract class PowerGraphSpeedTest {
 	}
 
 	public static void testRandom(int n, int m, int exponent) {
-		GraphAL graphAL = Utility.generateSparseAL(n, m);
+		GraphAL graphAL = Generator.generateAL(n, m);
 
 		test(graphAL, exponent);
 	}
