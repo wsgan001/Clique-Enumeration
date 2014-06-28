@@ -11,7 +11,7 @@ public class Tester {
 
 	public static void main(String[] args) {
 
-		GraphAL graph = FileLoader.loadGraphAL("/home/david/Documents/Glasgow/PROJECT/enumeration/data/snap/snap-roadNet-PA");
+				GraphAL graph = FileLoader.loadGraphAL("data/marknewman/marknewman-karatek");
 
 		AL_Tomita tom = new AL_Tomita(graph);
 
