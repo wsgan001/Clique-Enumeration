@@ -1,22 +1,33 @@
-import algorithm.AL_Tomita;
-import algorithm.BS_Eppstein;
-import algorithm.BS_Tomita;
+import algorithm.other_impl.TomitaPointers;
+import algorithm.bitset_impl.*;
+import algorithm.eppstein_impl.AlgorithmEppstein;
 import graph.GraphAL;
-import graph.GraphBS;
-import utility.FileLoader;
 import utility.Generator;
 
 
 public class Tester {
 
 	public static void main(String[] args) {
+		//raphBitSet bs = FileLoader.loadGraphBS("data/marknewman/marknewman-lesmis");
+		GraphBitSet bs = Generator.generateBS(20000, 5000000);
+		//bs = PowerGraph.raiseBFSv2(bs, 2);
+		AlgorithmBitSet tom = new AlgorithmBitSet(bs, new OrderNone(), new PivotTomita(), false);
+		tom.measureTime();
+		System.out.println(tom.getNumberOfCliques());
 
-				GraphAL graph = FileLoader.loadGraphAL("data/marknewman/marknewman-karatek");
+		GraphAL al = new GraphAL(bs);
+		AlgorithmEppstein epps = new AlgorithmEppstein(al);
+		epps.measureTime();
+		System.out.println(epps.getNumberOfCliques());
 
-		AL_Tomita tom = new AL_Tomita(graph);
+		TomitaPointers tom2 = new TomitaPointers(bs);
+		tom2.measureTime();
+		System.out.println(tom2.getNumberOfCliques());
+		//BS_Tomita tom = new BS_Tomita(bs);
+		//tom.measureTime();
+	}
 
-		long start = System.nanoTime();
-		tom.run();
-		System.out.println((System.nanoTime()-start)/1000000);
+	private static void testInteger(Integer x) {
+		x++;
 	}
 }

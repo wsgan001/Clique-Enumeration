@@ -1,9 +1,10 @@
-package algorithm;
+package algorithm.other_impl;
 
-import graph.GraphBS;
+import algorithm.CliqueAlgorithm;
+import algorithm.bitset_impl.GraphBitSet;
 import java.util.BitSet;
 
-public class Pointers_Tomita extends CliqueAlgorithm{
+public class TomitaPointers extends CliqueAlgorithm {
 	private BitSet[] connected;
 	private int[] all;
 	private int n;
@@ -11,11 +12,11 @@ public class Pointers_Tomita extends CliqueAlgorithm{
 	private int[] compsub;
 	private int c = 0;
 
-	public Pointers_Tomita(GraphBS graph) {
+	public TomitaPointers(GraphBitSet graph) {
 		this(graph, false);
 	}
 
-	public Pointers_Tomita(GraphBS graph, boolean verbose) {
+	public TomitaPointers(GraphBitSet graph, boolean verbose) {
 		super(verbose);
 		n = graph.size();
 		connected = graph.adjacencyMatrix();

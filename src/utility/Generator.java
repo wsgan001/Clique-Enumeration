@@ -1,13 +1,14 @@
 package utility;
 
+import algorithm.bitset_impl.GraphBitSet;
 import graph.*;
 
 import java.util.*;
 
 public abstract class Generator {
 
-	public static GraphBS generateBS(int n, int m) {
-		GraphBS graph = new GraphBS(n);
+	public static GraphBitSet generateBS(int n, int m) {
+		GraphBitSet graph = new GraphBitSet(n);
 		generate(graph, n, m);
 		return graph;
 	}
@@ -28,6 +29,7 @@ public abstract class Generator {
 
 			if (v != w && !graph.isAdjacent(v, w)) {
 				graph.addEdge(v, w);
+				graph.addEdge(w, v);
 				i++;
 			}
 		}

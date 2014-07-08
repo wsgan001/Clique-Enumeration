@@ -1,13 +1,11 @@
-package algorithm;
+package algorithm.bitset_impl;
 
-import graph.GraphBS;
-import graph.VertexBS;
 import java.util.BitSet;
 
 /**
  * Reference: Vladimir Batagelj, Matjaz Zaversnik: An O(m) Algorithm for Cores Decomposition of Networks (2006)
  */
-public abstract class CoreDecomposition {
+public class OrderCores implements Order {
 
 	/**
 	 * An implementation of Batagelj's core decomposition algorithm using a BitSet array adjacency matrix representation
@@ -15,7 +13,7 @@ public abstract class CoreDecomposition {
 	 * @param graph The input graph.
 	 * @return A degeneracy ordering of the graphs vertices.
 	 */
-	public static int[] cores(GraphBS graph) {
+	public int[] order(GraphBitSet graph) {
 		int n = graph.size();
 
 		int[] pos = new int[n];		// keeps tracks of the positions of the vertices in 'vert'
@@ -27,7 +25,7 @@ public abstract class CoreDecomposition {
 
 		// calculate the degree array and remember the maximum degree simultaneously.
 		for (int i = 0; i < graph.size(); i++) {
-			deg[i] = graph.getVertex(i).getDegree();
+			deg[i] = graph.degree(i);
 			if (deg[i] > maxDegree) maxDegree = deg[i];
 		}
 
@@ -35,8 +33,8 @@ public abstract class CoreDecomposition {
 
 		// calculate the number of vertices of a given degree
 		int k = 0;
-		for (VertexBS v : graph.getVertexSet())
-			bin[v.getDegree()]++;
+		for (int i = 0; i < graph.size(); i++)
+			bin[graph.degree(i)]++;
 
 		// calculate the correct values in bin
 		int start = 0;
@@ -47,10 +45,10 @@ public abstract class CoreDecomposition {
 		}
 
 		// order the vertices
-		for (VertexBS v : graph.getVertexSet()) {
-			pos[v.getIndex()] = bin[v.getDegree()];
-			vert[pos[v.getIndex()]] = v.getIndex();
-			bin[v.getDegree()]++;
+		for (int i = 0; i < n; i++) {
+			pos[i] = bin[graph.degree(i)];
+			vert[pos[i]] = i;
+			bin[graph.degree(i)]++;
 		}
 
 		// reset bin (as it the ordering above messes it up)
@@ -65,10 +63,11 @@ public abstract class CoreDecomposition {
 		for (int i = 0; i < n; i++) {
 			int v = vert[i];
 
+			if (deg[v] > k) k = deg[v];
 
 			// For all neighbours, we the neighbour and the first vertex in the same bin.
 			// In pos we swap their position and finally we increment the starting position of the bin.
-			BitSet neigbours = graph.getNeighbours(v);
+			BitSet neigbours = graph.neighbours(v);
 			for (int u = neigbours.nextSetBit(0); u > -1; u = neigbours.nextSetBit(u + 1)) {
 				if (deg[u] > deg[v]) {
 					// swap u and the vertex its bin points to
@@ -87,6 +86,7 @@ public abstract class CoreDecomposition {
 			}
 		}
 
+		// System.out.println("Core " + k);
 		return vert;
 	}
 }

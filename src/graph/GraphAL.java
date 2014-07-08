@@ -1,8 +1,10 @@
 package graph;
 
 
+import algorithm.bitset_impl.GraphBitSet;
+
 public class GraphAL implements Graph {
-	private VertexAL[] vertices;
+	private Vertex[] vertices;
 	private int size;
 
 	public GraphAL(int size) {
@@ -11,13 +13,13 @@ public class GraphAL implements Graph {
 		initVertices(size);
 	}
 
-	public GraphAL(GraphBS graph) {
+	public GraphAL(GraphBitSet graph) {
 		size = graph.size();
 
 		initVertices(size);
 
 		for(int i = 0; i < size; i++) {
-			for(int j = graph.getVertex(i).getAdjacency().nextSetBit(i); j > -1; j = graph.getVertex(i).getAdjacency().nextSetBit(j + 1)) {
+			for(int j = graph.neighbours(i).nextSetBit(i); j > -1; j = graph.neighbours(i).nextSetBit(j + 1)) {
 				vertices[i].addAdjacent(vertices[j]);
 				vertices[j].addAdjacent(vertices[i]);
 			}
@@ -25,10 +27,10 @@ public class GraphAL implements Graph {
 	}
 
 	private void initVertices(int n) {
-		vertices = new VertexAL[n];
+		vertices = new Vertex[n];
 		
 		for(int i = 0; i < n; i++) {
-			vertices[i] = new VertexAL(i);
+			vertices[i] = new Vertex(i);
 		}
 	}
 
@@ -45,16 +47,16 @@ public class GraphAL implements Graph {
 		return vertices[v].isAdjacent(w);
 	}
 
-	public VertexAL getVertex(int v) {
+	public Vertex getVertex(int v) {
 		return vertices[v];
 	}
 
-	public VertexAL[] getVertices() { return vertices; }
+	public Vertex[] getVertices() { return vertices; }
 
 	@Override
 	public String toString() {
 		String s = "";
-		for (VertexAL v : vertices) s = s + v + '\n';
+		for (Vertex v : vertices) s = s + v + '\n';
 		return s;
 	}
 

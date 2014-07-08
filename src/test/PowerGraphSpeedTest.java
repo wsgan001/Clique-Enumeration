@@ -1,7 +1,7 @@
 package test;
 
 import graph.GraphAL;
-import graph.GraphBS;
+import algorithm.bitset_impl.GraphBitSet;
 import utility.FileLoader;
 import utility.PowerGraph;
 import utility.Generator;
@@ -21,7 +21,7 @@ public abstract class PowerGraphSpeedTest {
 	}
 
 	public static void test(GraphAL graphAL, int exponent) {
-		GraphBS graphBS = new GraphBS(graphAL);
+		GraphBitSet graphBS = new GraphBitSet(graphAL);
 
 		long start = System.nanoTime();
 		System.out.println("Starting raiseBFS algorithm:");

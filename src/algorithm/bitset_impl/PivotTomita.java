@@ -1,22 +1,11 @@
-package algorithm;
-
-import graph.GraphBS;
+package algorithm.bitset_impl;
 
 import java.util.BitSet;
 
-public class BS_Tomita extends BS_WithPivot {
-
-	public BS_Tomita(GraphBS graph) {
-		super(graph);
-	}
-
-	public BS_Tomita(GraphBS graph, boolean verbose) {
-		super(graph, verbose);
-	}
+public class PivotTomita implements Pivot {
 
 	@Override
-	protected int selectPivot(BitSet P, BitSet X) {
-
+	public int selectPivot(GraphBitSet graph, BitSet P, BitSet X) {
 		// Create union of P and X
 		BitSet union = (BitSet)P.clone();
 		union.or(X);
@@ -26,7 +15,7 @@ public class BS_Tomita extends BS_WithPivot {
 		// Search for the maximum
 		for(int i = union.nextSetBit(0); i > -1; i = union.nextSetBit(i + 1)) {
 			BitSet set = (BitSet)P.clone();
-			set.and(graph.getNeighbours(i));
+			set.and(graph.neighbours(i));
 
 			if (set.cardinality() >= max) {
 				max = set.cardinality();

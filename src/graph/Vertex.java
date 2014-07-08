@@ -2,37 +2,37 @@ package graph;
 
 import java.util.ArrayList;
 
-public class VertexAL {
+public class Vertex {
 
 	private final int index;
-	private ArrayList<VertexAL> adjList;
+	private ArrayList<Vertex> adjList;
 	
-	public VertexAL(int index) {
+	public Vertex(int index) {
 		adjList = new ArrayList<>();
 		this.index = index;
 	}
 
-	public VertexAL(ArrayList<VertexAL> adjacencyList, int index) {
+	public Vertex(ArrayList<Vertex> adjacencyList, int index) {
 		this.adjList = adjacencyList;
 		this.index = index;
 	}
 	
-	public void addAdjacent(VertexAL v) {
+	public void addAdjacent(Vertex v) {
 		if(!adjList.contains(v))
 			adjList.add(v);
 	}
 
-	public void setAdjacency(ArrayList<VertexAL> adjList) { this.adjList = adjList; }
+	public void setAdjacency(ArrayList<Vertex> adjList) { this.adjList = adjList; }
 
 	public boolean isAdjacent(int v) {
-		for(VertexAL w : adjList) {
+		for(Vertex w : adjList) {
 			if(w.getIndex() == v) return true;
 		}
 
 		return false;
 	}
 	
-	public ArrayList<VertexAL> getAdjacencyList() {
+	public ArrayList<Vertex> getAdjacencyList() {
 		return adjList;
 	}
 	
@@ -42,7 +42,7 @@ public class VertexAL {
 	
 	public String toString() {
 		String s = index + ":";
-		for(VertexAL v : adjList) s = s + " " + v.getIndex();
+		for(Vertex v : adjList) s = s + " " + v.getIndex();
 		return s;
 	}
 }
