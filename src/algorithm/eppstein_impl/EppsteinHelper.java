@@ -2,8 +2,17 @@ package algorithm.eppstein_impl;
 
 import java.util.LinkedList;
 
-public class AlgorithmHelper {
+/**
+ * Class containing helper methods for Eppstein's algorithm implemented in {@link algorithm.eppstein_impl.Eppstein}.
+ */
+public class EppsteinHelper {
 
+	/**
+	 * Algorithm to calculate the degeneracy order of a graph.
+	 * @param adjList the graph represented as an array of adjacency lists.
+	 * @param size size of the graph.
+	 * @return ordering stored in Eppstein's data structure (see {@link algorithm.eppstein_impl.NeighbourListArray}
+	 */
 	public static NeighbourListArray[] computeDegeneracyOrder(LinkedList<Integer>[] adjList, int size) {
 		NeighbourList[] ordering = new NeighbourList[size];
 
@@ -14,7 +23,7 @@ public class AlgorithmHelper {
 		int[] degree = new int[size];
 
 		for (int i = 0; i < size; i++) {
-			verticesByDegree[i] = new LinkedList<>();
+			verticesByDegree[i] = new LinkedList<Integer>();
 			ordering[i] = new NeighbourList();
 		}
 
@@ -92,7 +101,6 @@ public class AlgorithmHelper {
 	}
 
 	private static int max(int x, int y) {
-		int max = x > y ? x : y;
-		return max;
+		return x > y ? x : y;
 	}
 }

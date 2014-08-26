@@ -1,6 +1,6 @@
 package utility;
 
-import algorithm.bitset_impl.GraphBitSet;
+import graph.GraphBitSet;
 import graph.*;
 
 import java.util.*;
@@ -10,6 +10,21 @@ public abstract class Generator {
 	public static GraphBitSet generateBS(int n, int m) {
 		GraphBitSet graph = new GraphBitSet(n);
 		generate(graph, n, m);
+		return graph;
+	}
+
+	public static GraphBitSet generateBS(int n, double p) {
+		GraphBitSet graph = new GraphBitSet(n);
+
+		for (int i = 0; i < n; i++) {
+			for (int j = i + 1; j < n; j++) {
+				if (Math.random() < p) {
+					graph.addEdge(i, j);
+					graph.addEdge(j, i);
+				}
+			}
+		}
+
 		return graph;
 	}
 

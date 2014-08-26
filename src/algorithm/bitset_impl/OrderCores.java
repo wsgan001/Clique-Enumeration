@@ -1,5 +1,7 @@
 package algorithm.bitset_impl;
 
+import graph.GraphBitSet;
+
 import java.util.BitSet;
 
 /**
@@ -52,9 +54,7 @@ public class OrderCores implements Order {
 		}
 
 		// reset bin (as it the ordering above messes it up)
-		for (int d = maxDegree; d > 0; d--) {
-			bin[d] = bin[d-1];
-		}
+		System.arraycopy(bin, 0, bin, 1, maxDegree);
 		bin[0] = 0;
 
 		// END ORDERING

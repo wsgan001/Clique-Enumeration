@@ -1,8 +1,4 @@
-package algorithm.bitset_impl;
-
-import graph.Graph;
-import graph.GraphAL;
-import graph.Vertex;
+package graph;
 
 import java.util.BitSet;
 
@@ -59,6 +55,14 @@ public class GraphBitSet implements Graph {
 		return size;
 	}
 
+	public int countEdges() {
+		int c = 0;
+		for (BitSet b : adjacency)
+			c += b.cardinality();
+
+		return c / 2;
+	}
+
 	@Override
 	public boolean isAdjacent(int v, int w) {
 		return adjacency[v].get(w);
@@ -78,12 +82,24 @@ public class GraphBitSet implements Graph {
 
 	@Override
 	public String toString() {
-		StringBuilder s = new StringBuilder("Graph size: " + size + '\n');
+		StringBuilder s = new StringBuilder(size + "\n" + countEdges() + "\n");
 		for(int i = 0; i < size; i++) {
-			s.append("Vertex ").append(i).append(" neighbours: ").append(adjacency[i]).append('\n');
+			for (int j = adjacency[i].nextSetBit(0); j > -1; j = adjacency[i].nextSetBit(j + 1)) {
+				s.append(i).append(' ').append(j).append('\n');
+			}
 		}
 
 		return s.toString();
+	}
+
+	public void print() {
+		System.out.println(size + "\n" + countEdges());
+
+		for(int i = 0; i < size; i++) {
+			for (int j = adjacency[i].nextSetBit(0); j > -1; j = adjacency[i].nextSetBit(j + 1)) {
+				System.out.printf("%d,%d\n", i, j);
+			}
+		}
 	}
 
 	@Override

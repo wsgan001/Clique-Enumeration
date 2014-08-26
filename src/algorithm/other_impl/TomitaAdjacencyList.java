@@ -8,6 +8,9 @@ import utility.SetOperation;
 import java.util.Arrays;
 import java.util.ArrayList;
 
+/**
+ * Simplest implementation of the Bron-Kerbosch algorithm for testing and verification purposes. Not efficient.
+ */
 public class TomitaAdjacencyList extends CliqueAlgorithm {
 	private final int size;
 	private GraphAL graph;
@@ -23,7 +26,7 @@ public class TomitaAdjacencyList extends CliqueAlgorithm {
 	}
 
 	public void run() {
-		ArrayList<Vertex> P = new ArrayList<>(Arrays.asList(graph.getVertices()));
+		ArrayList<Vertex> P = new ArrayList<Vertex>(Arrays.asList(graph.getVertices()));
 		extend(new ArrayList<Vertex>(), P, new ArrayList<Vertex>());
 	}
 
@@ -34,7 +37,7 @@ public class TomitaAdjacencyList extends CliqueAlgorithm {
 		
 		else {
 			// Find the pivot
-			ArrayList<Vertex> union = new ArrayList<>(P);
+			ArrayList<Vertex> union = new ArrayList<Vertex>(P);
 			union.addAll(X);
 			Vertex pivot = null;
 			int max = -1;
@@ -47,7 +50,7 @@ public class TomitaAdjacencyList extends CliqueAlgorithm {
 				}
 			}
 
-			ArrayList<Vertex> disconnected = new ArrayList<>(P);
+			ArrayList<Vertex> disconnected = new ArrayList<Vertex>(P);
 			disconnected.removeAll(pivot.getAdjacencyList());
 
 			for (Vertex v : disconnected){

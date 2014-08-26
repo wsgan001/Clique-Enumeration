@@ -1,10 +1,14 @@
 package algorithm.other_impl;
 
 import algorithm.CliqueAlgorithm;
-import algorithm.bitset_impl.GraphBitSet;
+import graph.GraphBitSet;
 import java.util.BitSet;
 
-public class TomitaPointers extends CliqueAlgorithm {
+/**
+ * Bron-Kerbosch algorithm implementation. Conversion from the original Algol code.
+ * Reference: C. Bron and J. Kerbosch: Finding All Cliques of an Undirected Graph (1973)
+ */
+public class BKPointers extends CliqueAlgorithm {
 	private BitSet[] connected;
 	private int[] all;
 	private int n;
@@ -12,16 +16,26 @@ public class TomitaPointers extends CliqueAlgorithm {
 	private int[] compsub;
 	private int c = 0;
 
-	public TomitaPointers(GraphBitSet graph) {
+	/**
+	 * Create the algorithm instance.
+	 * @param graph the graph that stores the adjacency matrix.
+	 */
+	public BKPointers(GraphBitSet graph) {
 		this(graph, false);
 	}
 
-	public TomitaPointers(GraphBitSet graph, boolean verbose) {
+	/**
+	 * Create the algorithm instance.
+	 * @param graph the graph that stores the adjacency matrix.
+	 * @param verbose true, if all cliques are to be printed.
+	 */
+	public BKPointers(GraphBitSet graph, boolean verbose) {
 		super(verbose);
 		n = graph.size();
 		connected = graph.adjacencyMatrix();
 	}
 
+	@Override
 	public void run() {
 		// Set diagonal to 1 as required by the algorithm
 		for (int i = 0; i < n; i++) connected[i].set(i);
@@ -39,18 +53,18 @@ public class TomitaPointers extends CliqueAlgorithm {
 		for (int i = 0; i < n; i++) connected[i].clear(i);
 	}
 
+	// recursive call
 	private void extend(int[] oldSet, int ne, int ce) {
+		inc(); // increment the number of recursive calls
 
 		int[] newSet = new int[ce];
-		int fixp = 0;
+		int fixp = 0; // although it's called fix point here, this is the pivot
 
 		int newne, newce, p, sel;
 
 		// candidate position
 		int s = 0;
 
-		// keeps track of the maximum of |CAND intersect N(u)|
-		int max = -1;
 		// temporary number of disconnections (name kept from the original BK algorithm, but it does not store the
 		// minimum anymore
 		int minnod = ce;
@@ -59,41 +73,37 @@ public class TomitaPointers extends CliqueAlgorithm {
 		// number of disconnections
 		int nod = 0;
 
-		// DETERMINE EACH COUNTER VALUE AND LOOK FOR MAXIMUM
-		for(int i = 0; i < ce; i++) {
+
+		// DETERMINE EACH COUNTER VALUE AND LOOK FOR MINIMUM
+		for(int i = 0; i < ce && minnod != 0; i++) {
 
 			// currently tested vertex
 			p = oldSet[i];
 
 			int count = 0;
-			int countNod = 0;
 
-			// COUNT DISCONNECTIONS AND SEARCH FOR MAX
-			// 'count' keeps track of the maximum, countMin keeps track of the number of disconnections for this vertex
-			for(int j = ne; j < ce; j++) {
-				if (connected[p].get(oldSet[j])) {
+			// COUNT DISCONNECTIONS
+			// 'count <= minnod' ensures the loop breaks when count is over the previous minimum
+			// 'count' keeps track of the number of disconnections
+			for(int j = ne; j < ce && count < minnod; j++) {
+				if (!connected[p].get(oldSet[j])) {
 					count++;
-				}
-				else {
-					countNod++;
 					// SAVE POSITION OF POTENTIAL CANDIDATE
 					pos = j;
 				}
-
 			}
 
 			// TEST NEW MINIMUM
-			if (count > max) {
+			if (count < minnod) {
 				fixp = p;
 
-				// set maximum to the new value
-				max = count;
-				minnod = countNod;
+				// set minimum to the new value
+				minnod = count;
 
-				// if maximum is in NOT
+				// if minimum is in NOT
 				if (i < ne) s = pos;
 
-				// if maximum is in CAND
+					// if minimum is in CAND
 				else {
 					s = i;
 					nod = 1;
@@ -103,8 +113,7 @@ public class TomitaPointers extends CliqueAlgorithm {
 		}
 
 
-
-		// BACKTRACK CYCLE
+		// Iterate through the intersection of P and N(pivot)
 		// if fixed point initially chosen from CAND then number of disconnections will be preincreased by one
 		for (nod = minnod + nod; nod >= 1; nod--) {
 
@@ -138,6 +147,7 @@ public class TomitaPointers extends CliqueAlgorithm {
 
 			// print compsub if it's a maximal clique
 			if (newce == 0) {
+				inc();
 				reportClique(compsub, c);
 			}
 

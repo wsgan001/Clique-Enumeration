@@ -11,8 +11,9 @@ import java.util.LinkedList;
 /**
  * Algorithm of Eppstein, Loffler and Strash
  * Source: Eppstein, Loffler and Strash: Listing All Maximal Cliques in Sparse Graphs in Near-Optimal Time (2010)
+ * Converted from their C code.
  */
-public class AlgorithmEppstein extends CliqueAlgorithm {
+public class Eppstein extends CliqueAlgorithm {
 
 	private GraphAL graph;
 
@@ -22,11 +23,11 @@ public class AlgorithmEppstein extends CliqueAlgorithm {
 	private int[][] neighboursInP;
 	private int[] numNeighbours;
 
-	public AlgorithmEppstein(GraphAL graph) {
+	public Eppstein(GraphAL graph) {
 		this(graph, false);
 	}
 
-	public AlgorithmEppstein(GraphAL graph, boolean verbose) {
+	public Eppstein(GraphAL graph, boolean verbose) {
 		super(verbose);
 		this.graph = graph;
 	}
@@ -40,7 +41,7 @@ public class AlgorithmEppstein extends CliqueAlgorithm {
 		neighboursInP = new int[size][];
 		numNeighbours = new int[size];
 
-		NeighbourListArray[] orderingArray = AlgorithmHelper.computeDegeneracyOrder(adjList, size);
+		NeighbourListArray[] orderingArray = EppsteinHelper.computeDegeneracyOrder(adjList, size);
 
 		for (int i = 0; i < size; i++) {
 			vertexLookup[i] = i;
@@ -51,7 +52,7 @@ public class AlgorithmEppstein extends CliqueAlgorithm {
 
 		PointerSet pointers = new PointerSet(0, 0, size);
 
-		LinkedList<Integer> partialClique = new LinkedList<>();
+		LinkedList<Integer> partialClique = new LinkedList<Integer>();
 
 		for (int i = 0; i < size; i++) {
 			int vertex = orderingArray[i].vertex;
@@ -70,6 +71,7 @@ public class AlgorithmEppstein extends CliqueAlgorithm {
 	}
 
 	private void extend(LinkedList<Integer> partialClique, int beginX, int beginP, int beginR) {
+		inc();
 		if (beginX >= beginP && beginP >= beginR) {
 			reportClique(partialClique);
 			return;
@@ -186,8 +188,7 @@ public class AlgorithmEppstein extends CliqueAlgorithm {
 
 	// helper method to find the minimum of two integers
 	private int min(int x, int y) {
-		int ret = (x > y) ? y : x;
-		return ret;
+		return (x > y) ? y : x;
 	}
 
 
@@ -262,6 +263,7 @@ public class AlgorithmEppstein extends CliqueAlgorithm {
 	}
 
 
+	// move a vertex to R and readjust the pointers
 	private void moveToR(int vertex, PointerSet pointers, PointerSet newPointers) {
 
 		pointers.R--;
@@ -346,7 +348,7 @@ public class AlgorithmEppstein extends CliqueAlgorithm {
 		LinkedList<Integer>[] adjList = new LinkedList[graph.size()];
 
 		for (int i = 0; i < graph.size(); i++) {
-			adjList[i] = new LinkedList<>();
+			adjList[i] = new LinkedList<Integer>();
 
 			for (Vertex v : graph.getVertex(i).getAdjacencyList()) {
 				adjList[i].addLast(v.getIndex());

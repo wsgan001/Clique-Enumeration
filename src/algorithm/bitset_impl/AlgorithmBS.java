@@ -1,17 +1,38 @@
 package algorithm.bitset_impl;
 
 import algorithm.CliqueAlgorithm;
+import graph.GraphBitSet;
 
 import java.util.BitSet;
 
-public class AlgorithmBitSet extends CliqueAlgorithm {
+/**
+ * BitSet implementation of the Bron-Kerbosch algorithm with pivot selection and (optionally) initial vertex ordering.
+ */
+public class AlgorithmBS extends CliqueAlgorithm {
 
 	private final GraphBitSet graph;
 	private final int size;
 	private Order order;
 	private Pivot selector;
 
-	public AlgorithmBitSet(GraphBitSet graph, Order order, Pivot selector, boolean verbose) {
+	/**
+	 *
+	 * @param graph a BitSet graph for which maximal cliques are to be enumerated
+	 * @param order vertex ordering for outer loop
+	 * @param selector	pivot selector
+	 */
+	public AlgorithmBS(GraphBitSet graph, Order order, Pivot selector) {
+		this(graph, order, selector, false);
+	}
+
+	/**
+	 *
+	 * @param graph a BitSet graph for which maximal cliques are to be enumerated
+	 * @param order vertex ordering for outer loop
+	 * @param selector pivot selector
+	 * @param verbose if set to true, every maximal clique is printed to stdout (used mainly for testing)
+	 */
+	public AlgorithmBS(GraphBitSet graph, Order order, Pivot selector, boolean verbose) {
 		super(verbose);
 		this.graph = graph;
 		this.size = graph.size();
@@ -19,6 +40,9 @@ public class AlgorithmBitSet extends CliqueAlgorithm {
 		this.selector = selector;
 	}
 
+	/**
+	 * Runs the algorithm.
+	 */
 	@Override
 	public void run() {
 		int[] order = this.order.order(graph);
@@ -59,6 +83,7 @@ public class AlgorithmBitSet extends CliqueAlgorithm {
 	}
 
 	private void extend(BitSet R, BitSet P, BitSet X) {
+		inc();
 		// If the candidate set is not empty, continue the algorithm
 		if (P.nextSetBit(0) > -1) {
 

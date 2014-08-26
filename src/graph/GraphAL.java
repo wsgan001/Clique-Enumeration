@@ -1,22 +1,29 @@
 package graph;
 
-
-import algorithm.bitset_impl.GraphBitSet;
-
+/**
+ * Adjacency list representation of a graph. It contains an array of its vertices. Every vertex is represented by a
+ * {@link graph.Vertex} object, which contains an adjacency list for the vertex.
+ */
 public class GraphAL implements Graph {
 	private Vertex[] vertices;
 	private int size;
 
+	/**
+	 * Default constructor that initialises the vertex set but does not add any edges.
+	 * @param size number of vertices.
+	 */
 	public GraphAL(int size) {
 		this.size = size;
 
 		initVertices(size);
 	}
 
+	/**
+	 * Constructor that builds the graph from a BitSet graph.
+	 * @param graph a BitSet graph to be copied.
+	 */
 	public GraphAL(GraphBitSet graph) {
-		size = graph.size();
-
-		initVertices(size);
+		this(graph.size());
 
 		for(int i = 0; i < size; i++) {
 			for(int j = graph.neighbours(i).nextSetBit(i); j > -1; j = graph.neighbours(i).nextSetBit(j + 1)) {
@@ -26,6 +33,7 @@ public class GraphAL implements Graph {
 		}
 	}
 
+	// Helper method for the constructor.
 	private void initVertices(int n) {
 		vertices = new Vertex[n];
 		
@@ -47,10 +55,19 @@ public class GraphAL implements Graph {
 		return vertices[v].isAdjacent(w);
 	}
 
+	/**
+	 * Returns the vertex object of a given index.
+	 * @param v the index of the vertex.
+	 * @return the {@link graph.Vertex} object.
+	 */
 	public Vertex getVertex(int v) {
 		return vertices[v];
 	}
 
+	/**
+	 * Returns the vertex set of the graph.
+	 * @return the vertex set.
+	 */
 	public Vertex[] getVertices() { return vertices; }
 
 	@Override
